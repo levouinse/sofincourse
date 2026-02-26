@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     } catch (error: unknown) {
       console.error('POST error:', error)
       if (error instanceof Error && error.name === 'ZodError') {
-        return NextResponse.json({ error: 'Invalid input', details: (error as { errors: unknown }).errors }, { status: 400 })
+        return NextResponse.json({ error: 'Invalid input', details: (error as unknown as { errors: unknown }).errors }, { status: 400 })
       }
       return NextResponse.json({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
     }
