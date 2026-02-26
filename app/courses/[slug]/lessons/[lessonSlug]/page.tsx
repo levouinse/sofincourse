@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { createClient } from '@/lib/supabase/client'
 import { notFound } from 'next/navigation'
 import LessonClient from './LessonClient'

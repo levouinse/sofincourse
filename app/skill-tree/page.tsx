@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import SkillTreeClient from './SkillTreeClient'
 import { Suspense } from 'react'
 import { SkillTreeSkeleton } from '@/components/Skeletons'
