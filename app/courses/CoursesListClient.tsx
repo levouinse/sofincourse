@@ -58,18 +58,18 @@ export function CoursesListClient({ courses }: { courses: Course[] }) {
         const isCompleted = completedCourses.has(course.slug)
         
         return (
-          <Link key={course.slug} href={`/courses/${course.slug}`}>
+          <Link key={course.slug} href={`/courses/${course.slug}`} aria-label={`View ${course.title} course`}>
             <Card className={`h-full bg-[#0f1419] border-[#282d35] hover:border-[#9bff00] transition-all cursor-pointer group relative ${isCompleted ? 'border-[#9bff00]/50' : ''}`}>
               {!loading && isCompleted && (
                 <div className="absolute top-4 right-4 z-10">
-                  <div className="flex items-center gap-1 px-2 py-1 bg-[#9bff00] text-black rounded text-xs font-bold">
-                    <CheckCircle2 className="w-3 h-3" />
+                  <div className="flex items-center gap-1 px-2 py-1 bg-[#9bff00] text-black rounded text-xs font-bold" role="status" aria-label="Course completed">
+                    <CheckCircle2 className="w-3 h-3" aria-hidden="true" />
                     COMPLETED
                   </div>
                 </div>
               )}
               <CardHeader>
-                <div className="w-full h-40 bg-gradient-to-br from-[#9bff00]/20 to-[#9bff00]/5 rounded-lg mb-4 flex items-center justify-center group-hover:from-[#9bff00]/30 group-hover:to-[#9bff00]/10 transition-all relative">
+                <div className="w-full h-40 bg-gradient-to-br from-[#9bff00]/20 to-[#9bff00]/5 rounded-lg mb-4 flex items-center justify-center group-hover:from-[#9bff00]/30 group-hover:to-[#9bff00]/10 transition-all relative" aria-hidden="true">
                   {course.category === 'security' ? (
                     <Shield className="w-16 h-16 text-[#9bff00]" />
                   ) : (
@@ -84,7 +84,7 @@ export function CoursesListClient({ courses }: { courses: Course[] }) {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-sm text-gray-500">
+                <CardDescription className="text-sm text-gray-400">
                   {course.description}
                 </CardDescription>
               </CardContent>

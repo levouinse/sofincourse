@@ -85,18 +85,18 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
             [ {course.category.toUpperCase()} ]
           </div>
           <CardTitle className="text-4xl mb-4 text-gray-200">{course.title}</CardTitle>
-          <CardDescription className="text-lg text-gray-500">
+          <CardDescription className="text-lg text-gray-400">
             {course.description}
           </CardDescription>
         </CardHeader>
       </Card>
 
       {isGuest && (
-        <Card className="mb-6 bg-[#9bff00]/5 border-[#9bff00]">
+        <Card className="mb-6 bg-[#9bff00]/5 border-[#9bff00]" role="alert">
           <CardContent className="p-4">
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-300">
               🔒 <span className="text-[#9bff00] font-semibold">Guest Mode:</span> You can access the first lesson for free. 
-              <Link href="/login" className="text-[#9bff00] hover:text-[#7acc00] underline ml-1">
+              <Link href="/login" className="text-[#9bff00] hover:text-[#7acc00] underline ml-1" aria-label="Login to unlock all lessons">
                 Login
               </Link> to unlock all lessons.
             </p>
@@ -118,21 +118,22 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
                 key={lesson.slug}
                 href={isLocked ? '/login' : `/courses/${slug}/lessons/${lesson.slug}`}
                 className={isLocked ? 'pointer-events-none' : ''}
+                aria-label={isLocked ? `Lesson ${idx + 1}: ${lesson.title} - Login required` : `Lesson ${idx + 1}: ${lesson.title}${isCompleted ? ' - Completed' : ''}`}
               >
-                <div className={`flex items-center gap-4 p-4 rounded-lg border transition-colors group ${
+                <div className={`flex items-center gap-4 p-4 rounded-lg border transition-colors group min-h-[60px] ${
                   isLocked 
                     ? 'border-[#282d35] opacity-60 cursor-not-allowed' 
                     : isCompleted
                     ? 'border-[#9bff00]/50 bg-[#9bff00]/5 hover:border-[#9bff00] cursor-pointer'
                     : 'border-[#282d35] hover:bg-[#9bff00]/5 hover:border-[#9bff00] cursor-pointer'
                 }`}>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0 ${
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shrink-0 ${
                     isLocked 
                       ? 'bg-[#282d35] text-gray-600' 
                       : isCompleted
                       ? 'bg-[#9bff00] text-black'
                       : 'bg-[#9bff00] text-black'
-                  }`}>
+                  }`} aria-hidden="true">
                     {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : idx + 1}
                   </div>
                   <div className="flex-1">
@@ -145,13 +146,13 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
                     </h3>
                   </div>
                   {isLocked ? (
-                    <Lock className="w-5 h-5 text-gray-600" />
+                    <Lock className="w-5 h-5 text-gray-600" aria-label="Locked" />
                   ) : isCompleted ? (
-                    <span className="text-xs px-2 py-1 bg-[#9bff00]/20 text-[#9bff00] rounded border border-[#9bff00] font-mono">
+                    <span className="text-xs px-2 py-1 bg-[#9bff00]/20 text-[#9bff00] rounded border border-[#9bff00] font-mono" role="status">
                       DONE
                     </span>
                   ) : (
-                    <PlayCircle className="w-5 h-5 text-gray-500 group-hover:text-[#9bff00] transition-colors" />
+                    <PlayCircle className="w-5 h-5 text-gray-400 group-hover:text-[#9bff00] transition-colors" aria-hidden="true" />
                   )}
                 </div>
               </Link>

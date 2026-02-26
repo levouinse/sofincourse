@@ -26,9 +26,9 @@ export function HomeClient() {
 
   return (
     <Link href="/dashboard" className="w-full sm:w-auto">
-      <Button size="lg" variant="outline" className="w-full text-base md:text-lg px-6 md:px-8 py-5 md:py-6 border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all">
-        <Shield className="w-4 h-4 md:w-5 md:h-5" />
-        ADMIN
+      <Button size="lg" variant="outline" className="w-full text-base md:text-lg px-8 md:px-10 py-6 md:py-7 border-2 border-[#9bff00] text-[#9bff00] hover:bg-[#9bff00] hover:text-black transition-all min-h-[48px]">
+        <Shield className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
+        <span>ADMIN</span>
       </Button>
     </Link>
   )
