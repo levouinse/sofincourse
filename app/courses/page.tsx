@@ -5,11 +5,17 @@ import { CourseCardSkeleton } from '@/components/Skeletons'
 import { createBrowserClient } from '@supabase/ssr'
 import { CoursesListClient } from './CoursesListClient'
 
+export const dynamic = 'force-dynamic'
+
 async function CoursesList() {
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    return <CoursesListClient courses={[]} />
+  }
+
+  const supabase = createBrowserClient(supabaseUrl, supabaseKey)
 
   const { data: courses } = await supabase
     .from('courses')
