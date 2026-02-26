@@ -1,0 +1,74 @@
+{
+  "name": "sofincourse",
+  "version": "0.1.0",
+  "description": "Free course platform accessible via clearnet and darknet (Tor), featuring courses on languages, coding, and security",
+  "author": "SofinCourse Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/sofincourse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/sofincourse/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/sofincourse#readme",
+  "keywords": [
+    "education",
+    "courses",
+    "learning",
+    "nextjs",
+    "react",
+    "typescript",
+    "supabase",
+    "firebase",
+    "tor",
+    "darknet",
+    "cybersecurity",
+    "coding",
+    "programming"
+  ],
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.97.0",
+    "@upstash/redis": "^1.36.2",
+    "canvas-confetti": "^1.9.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^17.3.1",
+    "firebase": "^12.9.0",
+    "firebase-admin": "^13.6.1",
+    "framer-motion": "^12.34.3",
+    "gray-matter": "^4.0.3",
+    "ioredis": "^5.9.3",
+    "isomorphic-dompurify": "^3.0.0",
+    "lucide-react": "^0.575.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-firebase-hooks": "^5.1.1",
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "^7.0.2",
+    "rehype-sanitize": "^6.0.0",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

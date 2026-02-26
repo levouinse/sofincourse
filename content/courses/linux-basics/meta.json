@@ -1,0 +1,7 @@
+{
+  "title": "Linux Basics",
+  "description": "Master Linux command line - file management, permissions, shell scripting, and system administration",
+  "category": "coding",
+  "thumbnail": "/courses/linux.jpg",
+  "order": 5
+}

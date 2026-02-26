@@ -1,0 +1,7 @@
+{
+  "title": "JavaScript Fundamentals",
+  "description": "Master JavaScript - the language of the web. Learn ES6+, DOM manipulation, and async programming",
+  "category": "coding",
+  "thumbnail": "/courses/javascript.jpg",
+  "order": 3
+}

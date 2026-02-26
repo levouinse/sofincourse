@@ -1,0 +1,10 @@
+*.sql
+*.md
+!content/**/*.md
+.git
+.github
+node_modules
+.next
+.env.example
+Dockerfile
+docker-compose.yml

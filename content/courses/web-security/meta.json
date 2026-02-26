@@ -1,0 +1,7 @@
+{
+  "title": "Web Security Essentials",
+  "description": "Learn web application security - XSS, CSRF, SQL Injection, and secure coding practices",
+  "category": "security",
+  "thumbnail": "/courses/websec.jpg",
+  "order": 4
+}

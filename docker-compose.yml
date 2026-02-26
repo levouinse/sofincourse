@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sofincourse-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env.local
+    networks:
+      - tor-network
+    restart: unless-stopped
+
+  tor:
+    image: goldy/tor-hidden-service:latest
+    container_name: sofincourse-tor
+    environment:
+      - SERVICE1_TOR_SERVICE_HOSTS=80:nextjs:3000
+      - SERVICE1_TOR_SERVICE_VERSION=3
+    volumes:
+      - tor-keys:/var/lib/tor/hidden_service/
+    networks:
+      - tor-network
+    restart: unless-stopped
+
+networks:
+  tor-network:
+    driver: bridge
+
+volumes:
+  tor-keys:
