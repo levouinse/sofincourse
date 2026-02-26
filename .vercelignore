@@ -1,10 +1,25 @@
-*.sql
+# Test and development files
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+test-*.ts
+check-*.ts
+seed.ts
+set-admin.ts
+run-migration.ts
+security-check.ts
+import-courses-to-db.ts
+delete-test-users.ts
+
+# Development
+.env.local
+.env.development
+
+# Documentation
 *.md
-!content/**/*.md
+!README.md
+
+# Git
 .git
-.github
-node_modules
-.next
-.env.example
-Dockerfile
-docker-compose.yml
+.gitignore

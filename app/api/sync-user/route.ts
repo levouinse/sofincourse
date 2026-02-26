@@ -49,45 +49,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, userId: existingUser.id })
     }
 
-    // Create auth user first
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
-      email,
-      email_confirm: true,
-      user_metadata: {
-        full_name: displayName || email,
-        avatar_url: photoURL
-      }
-    })
-
-    if (authError) {
-      console.error('Error creating auth user:', authError)
-      return NextResponse.json({ error: authError.message }, { status: 500 })
-    }
-
-    // Insert user profile with firebase_uid (if column exists)
-    const insertData: Record<string, string> = {
-      id: authData.user.id,
-      email,
-      name: displayName || email,
-      avatar_url: photoURL,
-      role: 'user',
-      firebase_uid: uid
-    }
-
+    // Insert user profile directly (Firebase handles auth)
     const { data, error } = await supabase
       .from('users')
-      .insert(insertData)
+      .insert({
+        email,
+        name: displayName || email,
+        avatar_url: photoURL,
+        role: 'user',
+        firebase_uid: uid
+      })
       .select('id')
       .single()
 
     if (error) {
-      console.error('Error creating user profile:', error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
     return NextResponse.json({ success: true, userId: data.id })
   } catch (error) {
-    console.error('Sync user error:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

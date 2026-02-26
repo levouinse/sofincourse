@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-slot'],
   },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
+        ],
+      },
+    ]
+  },
 };
 
 export default nextConfig;

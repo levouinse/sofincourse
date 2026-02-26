@@ -6,7 +6,10 @@ import { HomeClient } from './HomeClient'
 
 async function getStats() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:3000'}/api/stats`, {
+    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL 
+      ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin 
+      : 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/api/stats`, {
       next: { revalidate: 60 }
     })
     if (!res.ok) throw new Error('Failed to fetch')

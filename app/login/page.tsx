@@ -1,7 +1,5 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-
 import { useState } from 'react'
 import { auth, googleProvider } from '@/lib/firebase'
 import { signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
@@ -9,7 +7,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false)
@@ -18,13 +15,17 @@ export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
-  const supabase = createClient()
 
-  const syncWithSupabase = async (firebaseUser: { uid: string; email: string | null; getIdToken: () => Promise<string> }) => {
-    const token = await firebaseUser.getIdToken()
-    await supabase.auth.signInWithIdToken({
-      provider: 'google',
-      token
+  const syncWithSupabase = async (firebaseUser: { uid: string; email: string | null; displayName?: string | null; photoURL?: string | null }) => {
+    await fetch('/api/sync-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        displayName: firebaseUser.displayName,
+        photoURL: firebaseUser.photoURL
+      })
     })
   }
 

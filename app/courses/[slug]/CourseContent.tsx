@@ -58,7 +58,7 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
 
       const { data: progress } = await supabase
         .from('user_lesson_progress')
-        .select('lesson_id, completed')
+        .select('lesson_id, completed, lessons(id)')
         .eq('user_id', user.id)
         .eq('course_id', course.id)
 
@@ -111,7 +111,7 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
         <CardContent className="space-y-3">
           {lessons.map((lesson, idx) => {
             const isLocked = isGuest && idx > 0
-            const isCompleted = completedLessons.includes(lesson.slug)
+            const isCompleted = completedLessons.includes(lesson.id)
             
             return (
               <Link

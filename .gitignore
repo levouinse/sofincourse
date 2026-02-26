@@ -9,9 +9,14 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-/add-env-vercel.sh
+
 # testing
 /coverage
+*.test.ts
+*-test.ts
+test-*.ts
+check-*.ts
+security-*.ts
 
 # next.js
 /.next/
@@ -49,3 +54,6 @@ next-env.d.ts
 *.swp
 *.swo
 *~
+
+# scripts (development only)
+/add-env-vercel.sh

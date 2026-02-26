@@ -46,7 +46,7 @@ export default function CoursesManagement() {
       }
       
       const data = await response.json()
-      console.log('Loaded courses:', data.courses?.length || 0)
+
       setCourses(data.courses || [])
       setLoading(false)
     } catch (error) {

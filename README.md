@@ -6,22 +6,22 @@
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green)](https://supabase.com/)
 [![Firebase](https://img.shields.io/badge/Firebase-Auth-orange)](https://firebase.google.com/)
 
-Free course platform accessible via clearnet and darknet (Tor), featuring courses on languages, coding, and security.
+Free course platform featuring courses on coding, security, and technology. Built with Next.js, Supabase, and Firebase.
 
-![SofinCourse Platform](https://sofincourse.vercel.app/)
+**Live Demo:** [https://sofincourse.vercel.app/](https://sofincourse.vercel.app/)
 
 ## ✨ Features
 
-- 🌐 **Dual Access**: Clearnet with OAuth (Google/GitHub) + Darknet (Tor) read-only
-- 📚 **Course Management**: Web-based admin panel for CRUD operations
-- 🎥 **Hybrid Content**: Markdown files + video links (YouTube, Vimeo) + PDF support
-- 🎯 **Skill Tree**: Prerequisites system with 3D visualization (coming soon)
-- 📊 **Progress Tracking**: User progress saved in Supabase
+- 🔐 **Authentication**: Firebase OAuth (Google & GitHub)
+- 📚 **Course Management**: Admin panel for creating/editing courses and lessons
+- 🎥 **Rich Content**: Markdown lessons with YouTube video embeds
+- 📊 **Progress Tracking**: Real-time progress saved in Supabase database
 - 👤 **Guest Mode**: First lesson free, login required for full access
 - 📱 **Mobile Responsive**: Fully optimized for all devices
-- 🔒 **Secure**: XSS prevention, SQL injection protection, rate limiting
-- 🎨 **Modern UI**: GitHub dark theme with Tailwind CSS
-- ⚡ **Fast**: Optimized with Next.js 14 App Router
+- 🔒 **Secure**: XSS prevention, SQL injection protection, rate limiting, RLS policies
+- 🎨 **Modern UI**: Cyberpunk theme with Tailwind CSS v4
+- ⚡ **Fast**: Next.js 16 App Router with React 19 Server Components
+- 🎯 **SEO Optimized**: Sitemap, metadata, and structured data
 
 
 ## 🚀 Tech Stack
@@ -37,11 +37,12 @@ Free course platform accessible via clearnet and darknet (Tor), featuring course
 
 ## 📚 Course Content
 
-The platform includes 5 courses with 7 real lessons:
+The platform includes **5 courses** with **8 lessons**:
 
-1. **Introduction to Security** (2 lessons)
+1. **Introduction to Security** (3 lessons)
    - What is Cybersecurity?
    - Common Security Threats
+   - Network Security Fundamentals
 
 2. **Python Basics** (2 lessons)
    - Introduction to Python
@@ -55,17 +56,6 @@ The platform includes 5 courses with 7 real lessons:
 
 5. **Linux Basics** (1 lesson)
    - Linux Command Line Basics
-
-## Features
-
-- **Dual Access**: Clearnet with OAuth (Google/GitHub) + Darknet (Tor) read-only
-- **Course Management**: Web-based admin panel for CRUD operations
-- **Hybrid Content**: Markdown files + video links (YouTube, Vimeo) + PDF support
-- **Skill Tree**: Prerequisites system with 3D visualization (coming soon)
-- **Progress Tracking**: User progress saved in Supabase
-- **Guest Mode**: First lesson free, login required for full access
-- **Mobile Responsive**: Fully optimized for all devices
-- **SEO Optimized**: Lighthouse score 100 across all metrics
 
 ## 🚀 Quick Start
 
@@ -257,18 +247,28 @@ types/                # TypeScript types
 - High contrast colors
 - Screen reader friendly
 
-## Development Roadmap
+## 🗺️ Roadmap
 
-- [x] Task 1-7: Core platform (auth, courses, lessons)
-- [x] Task 8-9: Admin panel (course/lesson management)
-- [x] Task 10: Guest access with login gate
-- [x] Task 11: PDF support
-- [x] Task 12: Mobile responsive design
-- [x] Task 13: SEO optimization (Lighthouse 100)
-- [ ] Task 14: Prerequisites system
-- [ ] Task 15: 3D skill tree with Three.js
-- [ ] Task 16: Production Tor deployment
-- [ ] Task 17: Testing & documentation
+### ✅ Completed
+- Core platform (auth, courses, lessons)
+- Admin panel (course/lesson management)
+- Guest access with login gate
+- Mobile responsive design
+- SEO optimization
+- Progress tracking with real-time updates
+- Security measures (XSS, SQL injection, rate limiting)
+
+### 🚧 In Progress
+- Performance optimization
+- Additional course content
+
+### 📋 Planned
+- Prerequisites system for course progression
+- 3D skill tree visualization with Three.js
+- Course completion certificates
+- User dashboard with statistics
+- Course search and filtering
+- Multi-language support
 
 ## Performance
 
@@ -280,11 +280,43 @@ types/                # TypeScript types
 
 ## 📦 Deployment
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions for:
-- Vercel (Frontend)
-- Supabase (Backend)
-- Firebase (Authentication)
-- Docker + Tor (Hidden Service)
+### Vercel (Recommended)
+
+1. **Push to GitHub**
+   ```bash
+   git push origin main
+   ```
+
+2. **Import to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel will auto-detect Next.js
+
+3. **Add Environment Variables**
+   Go to Project Settings → Environment Variables and add:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   ADMIN_SECRET_KEY=your_secret_key
+   ```
+
+4. **Deploy**
+   - Click "Deploy"
+   - Your site will be live at `https://your-project.vercel.app`
+
+### Database Setup (Supabase)
+
+1. Create project at [supabase.com](https://supabase.com)
+2. Go to SQL Editor
+3. Run the migration from `supabase-schema-v2.sql`
+4. Copy your project URL and keys to environment variables
 
 ## 🤝 Contributing
 
@@ -320,24 +352,42 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) for deta
 - Discussions: [Ask a question](https://github.com/YOUR_USERNAME/sofincourse/discussions)
 - Email: contact@sofincourse.com
 
-## 🗺️ Roadmap
+## 🔒 Security
 
-See [CHANGELOG.md](./CHANGELOG.md) for version history and future plans:
+This project implements multiple security measures:
 
-- [ ] 3D Skill Tree visualization
-- [ ] Prerequisites system
-- [ ] User progress dashboard
-- [ ] Course completion certificates
-- [ ] Multi-language support
-- [ ] Course search and filtering
-- [ ] User comments and discussions
-- [ ] Mobile apps
+- **Authentication**: Firebase JWT token verification
+- **Authorization**: Role-based access control (RBAC)
+- **Database**: Row Level Security (RLS) policies on all tables
+- **Input Validation**: Zod schemas for all user inputs
+- **XSS Prevention**: DOMPurify sanitization
+- **SQL Injection**: Parameterized queries
+- **Rate Limiting**: IP-based rate limiting on API routes
+- **HTTPS**: Enforced on all connections (Vercel default)
 
-## ⭐ Star History
+For security issues, please email: security@sofincourse.com
 
-If you find this project useful, please consider giving it a star! ⭐
+## 📄 License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+## 🙏 Acknowledgments
+
+- [Next.js](https://nextjs.org/) - React framework
+- [Supabase](https://supabase.com/) - Backend as a Service
+- [Firebase](https://firebase.google.com/) - Authentication
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Vercel](https://vercel.com/) - Hosting
+
+## ⭐ Support
+
+If you find this project useful, please consider:
+- Giving it a star ⭐
+- Contributing to the codebase
+- Sharing with others
+- Reporting bugs
 
 ---
 
-Made with 💚 by SofinCourse Team
+**Made with 💚 by SofinCourse Team**
 
