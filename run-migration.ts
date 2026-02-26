@@ -13,7 +13,7 @@ async function runMigration() {
   try {
     // Check if firebase_uid column already exists
     console.log('1️⃣ Checking if firebase_uid column exists...')
-    const { data: columns, error: checkError } = await supabase
+    const { error: checkError } = await supabase
       .from('users')
       .select('firebase_uid')
       .limit(1)

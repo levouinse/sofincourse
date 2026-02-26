@@ -22,6 +22,7 @@ export async function createClient() {
         insert: () => ({ select: () => ({ single: () => Promise.resolve({ data: null, error: null }) }) }),
         update: () => ({ eq: () => ({ select: () => ({ single: () => Promise.resolve({ data: null, error: null }) }) }) }),
       }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any
   }
 
