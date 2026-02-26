@@ -51,8 +51,6 @@ export default function DashboardPage() {
         totalUsers: data.stats?.totalUsers || 0,
         totalCompletions: data.stats?.totalCompletions || 0
       })
-      setUsers(data.users || [])
-      setChartData(data.chartData || [])
       
       setHistory(prev => {
         const newHistory = [...prev, data.stats || { courses: 0, lessons: 0, users: 0, completions: 0 }]
