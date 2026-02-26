@@ -39,8 +39,6 @@ export default function SkillTreeClient({ courses }: { courses: CourseMeta[] }) 
         }
       } catch (error) {
         console.error('Error loading progress:', error)
-      } finally {
-        if (mounted) setLoading(false)
       }
     }
 
