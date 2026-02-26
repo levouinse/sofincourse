@@ -65,19 +65,13 @@ export async function POST(request: Request) {
     }
 
     // Insert user profile with firebase_uid (if column exists)
-    const insertData: any = {
+    const insertData: Record<string, string> = {
       id: authData.user.id,
       email,
       name: displayName || email,
       avatar_url: photoURL,
-      role: 'user'
-    }
-
-    // Try to add firebase_uid if column exists
-    try {
-      insertData.firebase_uid = uid
-    } catch (e) {
-      // Column doesn't exist yet, skip it
+      role: 'user',
+      firebase_uid: uid
     }
 
     const { data, error } = await supabase

@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       error: 'User not found in Supabase. Please sync user first.' 
     }, { status: 404 })
 
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  } catch (error: unknown) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
   }
 }

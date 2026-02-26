@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react'
 import confetti from 'canvas-confetti'
 import { LoginModal } from '@/components/LoginModal'
 import { auth } from '@/lib/firebase'
-import { createClient } from '@/lib/supabase/client'
 import type { User } from 'firebase/auth'
 
 interface LessonContent {
@@ -38,12 +37,11 @@ export default function LessonClient({
   slug,
   lessonSlug,
   lesson,
-  allLessonsCount,
   prevLesson,
   nextLesson,
   isLastLesson,
   courseTitle
-}: LessonClientProps) {
+}: Omit<LessonClientProps, 'allLessonsCount'>) {
   const [showCongrats, setShowCongrats] = useState(false)
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [user, setUser] = useState<User | null>(null)

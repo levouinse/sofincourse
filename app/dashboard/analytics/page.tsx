@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export default function Analytics() {
-  const [chartData, setChartData] = useState<any[]>([])
+  const [chartData, setChartData] = useState<{ name: string; value: number }[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 

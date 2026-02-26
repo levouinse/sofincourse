@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-let cachedStats: any = null
+interface CachedStats {
+  stats: { totalCourses: number; totalLessons: number; totalUsers: number; totalCompletions: number }
+  users: unknown[]
+  chartData: { name: string; value: number }[]
+}
+
+let cachedStats: CachedStats | null = null
 let cacheTime = 0
 const CACHE_DURATION = 30000
 
@@ -46,7 +52,7 @@ export async function GET(request: Request) {
       .select('course_id, courses!inner(title)')
       .limit(1000)
       
-    const completionsByCourse = chartData?.reduce((acc: any, item: any) => {
+    const completionsByCourse = chartData?.reduce((acc: Record<string, number>, item: { courses?: { title?: string } }) => {
       const title = item.courses?.title || 'Unknown'
       acc[title] = (acc[title] || 0) + 1
       return acc

@@ -32,6 +32,39 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
   const [user, setUser] = useState<{ uid: string; email: string | null; displayName?: string | null; photoURL?: string | null } | null>(null)
   const [completedLessons, setCompletedLessons] = useState<string[]>([])
 
+  const loadProgress = async (firebaseUid: string) => {
+    const supabase = createClient()
+    
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('firebase_uid', firebaseUid)
+      .maybeSingle()
+
+    if (userError && userError.code === '42703') {
+      return
+    }
+
+    if (!user) return
+
+    const { data: course } = await supabase
+      .from('courses')
+      .select('id')
+      .eq('slug', slug)
+      .single()
+
+    if (!course) return
+
+    const { data: progress } = await supabase
+      .from('user_lesson_progress')
+      .select('lesson_id, completed')
+      .eq('user_id', user.id)
+      .eq('course_id', course.id)
+
+    const completed = progress?.filter(p => p.completed).map(p => p.lesson_id) || []
+    setCompletedLessons(completed)
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
       setUser(firebaseUser)
@@ -40,14 +73,7 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
       }
     })
     return () => unsubscribe()
-  }, [])
-
-  const loadProgress = async (firebaseUid: string) => {
-    const supabase = createClient()
-    
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .select('id')
+  }, [loadProgress])
       .eq('firebase_uid', firebaseUid)
       .maybeSingle()
 

@@ -8,8 +8,17 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowLeft, Shield, User } from 'lucide-react'
 
+interface UserData {
+  id: string
+  email: string
+  name?: string
+  avatar_url?: string
+  role: string
+  created_at: string
+}
+
 export default function UsersManagement() {
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<UserData[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
@@ -80,6 +89,7 @@ export default function UsersManagement() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     {user.avatar_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img src={user.avatar_url} alt="" className="w-12 h-12 rounded-full border-2 border-[#282d35]" />
                     ) : (
                       <div className="w-12 h-12 bg-purple-400/10 rounded-full flex items-center justify-center border-2 border-[#282d35]">

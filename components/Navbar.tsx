@@ -33,7 +33,7 @@ export function Navbar() {
       setLoading(false)
     }
 
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(() => {
       checkAdmin()
     })
 

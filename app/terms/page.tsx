@@ -60,7 +60,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-2xl font-bold text-gray-200 mb-4">5. Disclaimer</h2>
-            <p>SofinCourse is provided "as is" without warranties of any kind. We do not guarantee:</p>
+            <p>SofinCourse is provided &quot;as is&quot; without warranties of any kind. We do not guarantee:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li>Uninterrupted or error-free service</li>
               <li>Accuracy or completeness of content</li>

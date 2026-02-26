@@ -13,10 +13,9 @@ async function checkSecurity() {
   
   // 1. Check RLS is enabled
   console.log('1️⃣ Checking Row Level Security (RLS)...')
-  const { data: tables } = await supabase.rpc('pg_tables', {}).select('*').limit(1).throwOnError().catch(() => ({ data: null }))
   
   // Check users table
-  const { data: users, error: usersError } = await supabase
+  const { error: usersError } = await supabase
     .from('users')
     .select('id, email, role')
     .limit(1)
@@ -39,7 +38,7 @@ async function checkSecurity() {
   
   // 3. Check courses are public
   console.log('\n3️⃣ Checking public course access...')
-  const { data: courses, error: coursesError } = await supabase
+  const { data: courses } = await supabase
     .from('courses')
     .select('id, title, published')
     .eq('published', true)

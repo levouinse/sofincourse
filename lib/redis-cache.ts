@@ -19,7 +19,7 @@ type CacheEntry<T> = {
 }
 
 class MemoryCache {
-  private cache: Map<string, CacheEntry<any>> = new Map()
+  private cache: Map<string, CacheEntry<unknown>> = new Map()
   private maxSize = 100
 
   set<T>(key: string, data: T, ttlSeconds: number = 300) {

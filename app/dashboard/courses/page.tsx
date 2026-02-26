@@ -8,11 +8,22 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowLeft, Plus, Edit, Trash2, X, FileText } from 'lucide-react'
 
+interface Course {
+  id: string
+  slug: string
+  title: string
+  description: string
+  category: string
+  thumbnail_url?: string
+  order_index: number
+  published: boolean
+}
+
 export default function CoursesManagement() {
-  const [courses, setCourses] = useState<any[]>([])
+  const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
-  const [editingCourse, setEditingCourse] = useState<any>(null)
+  const [editingCourse, setEditingCourse] = useState<Course | null>(null)
   const [formData, setFormData] = useState({ slug: '', title: '', description: '', category: 'coding', thumbnail_url: '', order_index: 0, published: true })
   const [saving, setSaving] = useState(false)
   const router = useRouter()
@@ -49,7 +60,7 @@ export default function CoursesManagement() {
       if (!user) router.push('/login')
       else loadCourses()
     })
-  }, [router])
+  }, [router, loadCourses])
 
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"?`)) return
@@ -124,7 +135,7 @@ export default function CoursesManagement() {
     setShowModal(true)
   }
 
-  const openEdit = (course: any) => {
+  const openEdit = (course: Course) => {
     setEditingCourse(course)
     setFormData({ slug: course.slug, title: course.title, description: course.description || '', category: course.category, thumbnail_url: course.thumbnail_url || '', order_index: course.order_index, published: course.published })
     setShowModal(true)

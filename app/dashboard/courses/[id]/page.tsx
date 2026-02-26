@@ -8,16 +8,33 @@ import { auth } from '@/lib/firebase'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { ArrowLeft, Plus, Edit, Trash2, X, FileText } from 'lucide-react'
+import { ArrowLeft, Plus, Edit, Trash2, X } from 'lucide-react'
+
+interface Course {
+  id: string
+  title: string
+}
+
+interface Lesson {
+  id: string
+  slug: string
+  title: string
+  content_markdown: string
+  video_url?: string
+  video_provider?: string
+  pdf_url?: string
+  content_type: string
+  order_index: number
+}
 
 export default function LessonsManagement() {
   const params = useParams()
   const courseId = params.id as string
-  const [course, setCourse] = useState<any>(null)
-  const [lessons, setLessons] = useState<any[]>([])
+  const [course, setCourse] = useState<Course | null>(null)
+  const [lessons, setLessons] = useState<Lesson[]>([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
-  const [editingLesson, setEditingLesson] = useState<any>(null)
+  const [editingLesson, setEditingLesson] = useState<Lesson | null>(null)
   const [formData, setFormData] = useState({ 
     course_id: courseId,
     slug: '', 
@@ -37,7 +54,7 @@ export default function LessonsManagement() {
       // Load course info
       const courseRes = await fetch('/api/admin/courses')
       const courseData = await courseRes.json()
-      const foundCourse = courseData.courses?.find((c: any) => c.id === courseId)
+      const foundCourse = courseData.courses?.find((c: { id: string }) => c.id === courseId)
       setCourse(foundCourse)
 
       // Load lessons
@@ -56,7 +73,7 @@ export default function LessonsManagement() {
       if (!user) router.push('/login')
       else loadData()
     })
-  }, [router, courseId])
+  }, [router, courseId, loadData])
 
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"?`)) return

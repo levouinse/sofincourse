@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BookOpen, Shield, CheckCircle2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { auth } from '@/lib/firebase'
-import { createClient } from '@/lib/supabase/client'
 
 interface Course {
   id: string

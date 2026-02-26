@@ -10,7 +10,6 @@ import { auth } from '@/lib/firebase'
 
 export default function SkillTreeClient({ courses }: { courses: CourseMeta[] }) {
   const [completedCourses, setCompletedCourses] = useState<string[]>([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     let mounted = true

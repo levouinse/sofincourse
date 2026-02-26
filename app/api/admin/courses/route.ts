@@ -8,7 +8,7 @@ import { withAdmin } from '@/lib/auth-middleware'
 // GET - Public access (no auth required)
 export async function GET() {
   try {
-    const cached = await cache.get<any[]>('admin-courses')
+    const cached = await cache.get<unknown[]>('admin-courses')
     if (cached) {
       return NextResponse.json({ courses: cached })
     }
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     } catch (error: unknown) {
       console.error('POST error:', error)
       if (error instanceof Error && error.name === 'ZodError') {
-        return NextResponse.json({ error: 'Invalid input', details: (error as any).errors }, { status: 400 })
+        return NextResponse.json({ error: 'Invalid input', details: (error as { errors: unknown }).errors }, { status: 400 })
       }
       return NextResponse.json({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
     }

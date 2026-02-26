@@ -23,7 +23,7 @@ export async function withAuth(
     }
 
     return handler(request, user)
-  } catch (error) {
+  } catch {
     // Fallback: decode token client-side (less secure but works without Firebase Admin SDK)
     console.warn('Firebase Admin not configured, using fallback auth')
     
