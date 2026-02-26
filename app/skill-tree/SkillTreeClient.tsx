@@ -17,7 +17,6 @@ export default function SkillTreeClient({ courses }: { courses: CourseMeta[] }) 
     const loadProgress = async () => {
       const firebaseUser = auth.currentUser
       if (!firebaseUser) {
-        setLoading(false)
         return
       }
 
@@ -28,7 +27,6 @@ export default function SkillTreeClient({ courses }: { courses: CourseMeta[] }) 
         })
         
         if (!response.ok) {
-          setLoading(false)
           return
         }
         
@@ -50,7 +48,6 @@ export default function SkillTreeClient({ courses }: { courses: CourseMeta[] }) 
       if (user) loadProgress()
       else if (mounted) {
         setCompletedCourses([])
-        setLoading(false)
       }
     })
 

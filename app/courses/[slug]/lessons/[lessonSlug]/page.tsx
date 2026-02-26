@@ -53,7 +53,6 @@ async function LessonContent({ slug, lessonSlug }: { slug: string; lessonSlug: s
         contentType: lesson.content_type,
         order: lesson.order_index
       }}
-      allLessonsCount={allLessons?.length ?? 0}
       prevLesson={prevLesson}
       nextLesson={nextLesson}
       isLastLesson={isLastLesson}
