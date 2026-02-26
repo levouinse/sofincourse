@@ -52,11 +52,11 @@ export async function GET(request: Request) {
       .select('course_id, courses!inner(title)')
       .limit(1000)
       
-    const completionsByCourse = chartData?.reduce((acc: Record<string, number>, item: { courses?: { title?: string } }) => {
+    const completionsByCourse = (chartData as unknown as Array<{ courses?: { title?: string } }>)?.reduce((acc: Record<string, number>, item) => {
       const title = item.courses?.title || 'Unknown'
       acc[title] = (acc[title] || 0) + 1
       return acc
-    }, {})
+    }, {} as Record<string, number>)
 
     const result = {
       stats: {
