@@ -61,7 +61,7 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
       .eq('user_id', user.id)
       .eq('course_id', course.id)
 
-    const completed = progress?.filter(p => p.completed).map(p => p.lesson_id) || []
+    const completed = progress?.filter((p: { completed: boolean }) => p.completed).map((p: { lesson_id: string }) => p.lesson_id) || []
     setCompletedLessons(completed)
   }
 

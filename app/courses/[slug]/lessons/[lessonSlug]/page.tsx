@@ -36,7 +36,7 @@ async function LessonContent({ slug, lessonSlug }: { slug: string; lessonSlug: s
     .eq('course_id', course.id)
     .order('order_index', { ascending: true })
 
-  const currentIdx = allLessons?.findIndex(l => l.slug === lessonSlug) ?? -1
+  const currentIdx = allLessons?.findIndex((l: { slug: string }) => l.slug === lessonSlug) ?? -1
   const prevLesson = currentIdx > 0 && allLessons ? allLessons[currentIdx - 1] : null
   const nextLesson = currentIdx < (allLessons?.length ?? 0) - 1 && allLessons ? allLessons[currentIdx + 1] : null
   const isLastLesson = currentIdx === (allLessons?.length ?? 0) - 1

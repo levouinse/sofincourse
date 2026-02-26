@@ -15,7 +15,7 @@ async function SkillTreeContent() {
     .eq('published', true)
     .order('order_index', { ascending: true })
 
-  const coursesData = courses?.map(c => ({
+  const coursesData = courses?.map((c: { slug: string; title: string; description: string; category: string; thumbnail_url: string; order_index: number }) => ({
     slug: c.slug,
     title: c.title,
     description: c.description || '',
