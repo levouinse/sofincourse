@@ -8,7 +8,7 @@
 
 Free course platform accessible via clearnet and darknet (Tor), featuring courses on languages, coding, and security.
 
-![SofinCourse Platform](https://via.placeholder.com/1200x600/0d1117/58a6ff?text=SofinCourse+Platform)
+![SofinCourse Platform](https://sofincourse.vercel.app/)
 
 ## ✨ Features
 
@@ -23,18 +23,6 @@ Free course platform accessible via clearnet and darknet (Tor), featuring course
 - 🎨 **Modern UI**: GitHub dark theme with Tailwind CSS
 - ⚡ **Fast**: Optimized with Next.js 14 App Router
 
-## 📸 Screenshots
-
-<table>
-  <tr>
-    <td><img src="https://via.placeholder.com/400x300/0d1117/58a6ff?text=Home+Page" alt="Home Page"/></td>
-    <td><img src="https://via.placeholder.com/400x300/0d1117/58a6ff?text=Course+Catalog" alt="Course Catalog"/></td>
-  </tr>
-  <tr>
-    <td><img src="https://via.placeholder.com/400x300/0d1117/58a6ff?text=Lesson+Viewer" alt="Lesson Viewer"/></td>
-    <td><img src="https://via.placeholder.com/400x300/0d1117/58a6ff?text=Admin+Panel" alt="Admin Panel"/></td>
-  </tr>
-</table>
 
 ## 🚀 Tech Stack
 
