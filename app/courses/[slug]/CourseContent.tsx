@@ -74,32 +74,6 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
     })
     return () => unsubscribe()
   }, [loadProgress])
-      .eq('firebase_uid', firebaseUid)
-      .maybeSingle()
-
-    if (userError || !user) return
-
-    const { data: course } = await supabase
-      .from('courses')
-      .select('id')
-      .eq('slug', slug)
-      .single()
-
-    if (!course) return
-
-    const { data: progress } = await supabase
-      .from('user_lesson_progress')
-      .select('lessons(slug)')
-      .eq('user_id', user.id)
-      .eq('course_id', course.id)
-
-    const completed = progress?.map(p => {
-      const lesson = p.lessons as unknown as { slug: string }
-      return lesson.slug
-    }) || []
-    
-    setCompletedLessons(completed)
-  }
 
   const isGuest = !user
 

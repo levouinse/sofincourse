@@ -2,7 +2,7 @@
 export const dynamic = 'force-dynamic'
 
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { auth } from '@/lib/firebase'
 import { Card, CardContent } from '@/components/ui/card'
@@ -49,7 +49,7 @@ export default function LessonsManagement() {
   const [saving, setSaving] = useState(false)
   const router = useRouter()
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       // Load course info
       const courseRes = await fetch('/api/admin/courses')
@@ -66,14 +66,14 @@ export default function LessonsManagement() {
       console.error('Load error:', err)
       setLoading(false)
     }
-  }
+  }, [courseId])
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
       if (!user) router.push('/login')
       else loadData()
     })
-  }, [router, courseId, loadData])
+  }, [router, loadData])
 
   const handleDelete = async (id: string, title: string) => {
     if (!confirm(`Delete "${title}"?`)) return
@@ -121,7 +121,7 @@ export default function LessonsManagement() {
     setShowModal(true)
   }
 
-  const openEdit = (lesson: any) => {
+  const openEdit = (lesson: Lesson) => {
     setEditingLesson(lesson)
     setFormData({ 
       course_id: courseId,

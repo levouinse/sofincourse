@@ -13,7 +13,6 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [stats, setStats] = useState({ totalCourses: 0, totalLessons: 0, totalUsers: 0, totalCompletions: 0 })
-  const [chartData, setChartData] = useState<Array<{ name: string; value: number }>>([])
   const [history, setHistory] = useState<Array<{ courses: number; lessons: number; users: number; completions: number }>>([])
   const router = useRouter()
 

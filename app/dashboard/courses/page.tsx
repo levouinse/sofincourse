@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/firebase'
 import { Card, CardContent } from '@/components/ui/card'
@@ -28,7 +28,7 @@ export default function CoursesManagement() {
   const [saving, setSaving] = useState(false)
   const router = useRouter()
 
-  const loadCourses = async () => {
+  const loadCourses = useCallback(async () => {
     try {
       const user = auth.currentUser
       if (!user) {
@@ -53,7 +53,7 @@ export default function CoursesManagement() {
       console.error('Load courses error:', error)
       setLoading(false)
     }
-  }
+  }, [router])
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
