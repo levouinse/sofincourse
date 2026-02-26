@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   email TEXT NOT NULL,
   name TEXT,
   avatar_url TEXT,
+  firebase_uid TEXT UNIQUE,
   role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin')),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -72,6 +73,7 @@ CREATE INDEX IF NOT EXISTS idx_lessons_order ON lessons(course_id, order_index);
 CREATE INDEX IF NOT EXISTS idx_user_progress_user_id ON user_lesson_progress(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_progress_lesson_id ON user_lesson_progress(lesson_id);
 CREATE INDEX IF NOT EXISTS idx_course_completions_user_id ON course_completions(user_id);
+CREATE INDEX IF NOT EXISTS idx_users_firebase_uid ON users(firebase_uid);
 
 -- Enable Row Level Security
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;

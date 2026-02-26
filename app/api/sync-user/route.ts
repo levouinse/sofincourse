@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { checkRateLimit } from '@/lib/security'
 
+export async function GET() {
+  return NextResponse.json({ 
+    message: 'Sync user endpoint. Use POST method with uid, email, displayName, photoURL' 
+  })
+}
+
 export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown'
   if (!checkRateLimit(`sync-user-${ip}`, 20, 60000)) {
