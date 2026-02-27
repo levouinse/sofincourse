@@ -93,12 +93,13 @@ export async function GET(request: Request) {
     const [completionsResult, progressResult] = await Promise.all([
       supabase
         .from('course_completions')
-        .select('course_id, courses(slug)')
+        .select('course_id, courses!inner(slug)')
         .eq('user_id', user.id),
       supabase
         .from('user_lesson_progress')
         .select('course_id')
         .eq('user_id', user.id)
+        .limit(1000)
     ])
 
     const uniqueCourses = new Set(progressResult.data?.map(p => p.course_id) || [])

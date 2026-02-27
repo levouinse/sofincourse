@@ -34,7 +34,8 @@ export async function GET(request: Request) {
       { count: lessonsCount },
       { count: usersCount },
       { count: completionsCount },
-      { data: users }
+      { data: users },
+      { data: chartData }
     ] = await Promise.all([
       supabase.from('courses').select('*', { count: 'exact', head: true }),
       supabase.from('lessons').select('*', { count: 'exact', head: true }),
@@ -44,13 +45,12 @@ export async function GET(request: Request) {
         .from('users')
         .select('id, email, name, avatar_url, role, created_at')
         .order('created_at', { ascending: false })
-        .limit(10)
+        .limit(10),
+      supabase
+        .from('course_completions')
+        .select('course_id, courses!inner(title)')
+        .limit(1000)
     ])
-
-    const { data: chartData } = await supabase
-      .from('course_completions')
-      .select('course_id, courses!inner(title)')
-      .limit(1000)
       
     const completionsByCourse = (chartData as unknown as Array<{ courses?: { title?: string } }>)?.reduce((acc: Record<string, number>, item) => {
       const title = item.courses?.title || 'Unknown'

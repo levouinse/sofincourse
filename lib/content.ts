@@ -95,6 +95,15 @@ export function getLessonsBySlug(courseSlug: string): LessonContent[] {
     .sort((a, b) => a!.order - b!.order) as LessonContent[]
 }
 
+// NEW: Batch function to get all lessons for all courses at once (prevents N+1)
+export function getAllCoursesWithLessons(): Array<{ course: CourseMeta; lessons: LessonContent[] }> {
+  const courses = getAllCourses()
+  return courses.map(course => ({
+    course,
+    lessons: getLessonsBySlug(course.slug)
+  }))
+}
+
 export function getLesson(courseSlug: string, lessonSlug: string): LessonContent | null {
   if (!isValidSlug(courseSlug) || !isValidSlug(lessonSlug)) return null
   

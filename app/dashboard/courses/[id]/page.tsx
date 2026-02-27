@@ -51,15 +51,19 @@ export default function LessonsManagement() {
 
   const loadData = useCallback(async () => {
     try {
-      // Load course info
-      const courseRes = await fetch('/api/admin/courses')
-      const courseData = await courseRes.json()
+      // Load course and lessons in parallel
+      const [courseRes, lessonsRes] = await Promise.all([
+        fetch('/api/admin/courses'),
+        fetch(`/api/admin/lessons?course_id=${courseId}`)
+      ])
+      
+      const [courseData, lessonsData] = await Promise.all([
+        courseRes.json(),
+        lessonsRes.json()
+      ])
+      
       const foundCourse = courseData.courses?.find((c: { id: string }) => c.id === courseId)
       setCourse(foundCourse)
-
-      // Load lessons
-      const lessonsRes = await fetch(`/api/admin/lessons?course_id=${courseId}`)
-      const lessonsData = await lessonsRes.json()
       setLessons(Array.isArray(lessonsData) ? lessonsData : [])
       setLoading(false)
     } catch (err) {

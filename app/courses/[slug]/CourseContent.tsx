@@ -36,33 +36,36 @@ export function CourseContent({ slug, course, lessons }: CourseContentProps) {
     const loadProgress = async (firebaseUid: string) => {
       const supabase = createClient()
       
-      const { data: user, error: userError } = await supabase
-        .from('users')
-        .select('id')
-        .eq('firebase_uid', firebaseUid)
-        .maybeSingle()
+      // Parallel queries to prevent N+1
+      const [userResult, courseResult] = await Promise.all([
+        supabase
+          .from('users')
+          .select('id')
+          .eq('firebase_uid', firebaseUid)
+          .maybeSingle(),
+        supabase
+          .from('courses')
+          .select('id')
+          .eq('slug', slug)
+          .single()
+      ])
 
-      if (userError && userError.code === '42703') {
+      if (userResult.error && userResult.error.code === '42703') {
         return
       }
 
-      if (!user) return
+      if (!userResult.data || !courseResult.data) return
 
-      const { data: course } = await supabase
-        .from('courses')
-        .select('id')
-        .eq('slug', slug)
-        .single()
-
-      if (!course) return
-
+      // Single query for progress - no JOIN needed (we already have lesson_id)
       const { data: progress } = await supabase
         .from('user_lesson_progress')
-        .select('lesson_id, completed, lessons(id)')
-        .eq('user_id', user.id)
-        .eq('course_id', course.id)
+        .select('lesson_id, completed')
+        .eq('user_id', userResult.data.id)
+        .eq('course_id', courseResult.data.id)
+        .eq('completed', true)
+        .limit(100)
 
-      const completed = progress?.filter((p: { completed: boolean }) => p.completed).map((p: { lesson_id: string }) => p.lesson_id) || []
+      const completed = progress?.map((p: { lesson_id: string }) => p.lesson_id) || []
       setCompletedLessons(completed)
     }
 

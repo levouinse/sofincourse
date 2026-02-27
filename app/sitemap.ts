@@ -1,11 +1,13 @@
 import { MetadataRoute } from 'next'
-import { getAllCourses, getLessonsBySlug } from '@/lib/content'
+import { getAllCoursesWithLessons } from '@/lib/content'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://sofincourse.com'
-  const courses = getAllCourses()
   
-  const routes = [
+  // Fetch all courses with lessons in one go (prevents N+1)
+  const coursesWithLessons = getAllCoursesWithLessons()
+  
+  const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -32,8 +34,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Add course pages
-  courses.forEach(course => {
+  // Add course and lesson pages (no N+1 - data already loaded)
+  coursesWithLessons.forEach(({ course, lessons }) => {
     routes.push({
       url: `${baseUrl}/courses/${course.slug}`,
       lastModified: new Date(),
@@ -42,7 +44,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
 
     // Add lesson pages
-    const lessons = getLessonsBySlug(course.slug)
     lessons.forEach(lesson => {
       routes.push({
         url: `${baseUrl}/courses/${course.slug}/lessons/${lesson.slug}`,

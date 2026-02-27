@@ -12,6 +12,7 @@ import Link from 'next/link'
 async function LessonContent({ slug, lessonSlug }: { slug: string; lessonSlug: string }) {
   const supabase = createClient()
   
+  // Fetch course first
   const { data: course } = await supabase
     .from('courses')
     .select('id, slug, title')
@@ -21,20 +22,26 @@ async function LessonContent({ slug, lessonSlug }: { slug: string; lessonSlug: s
 
   if (!course) notFound()
 
-  const { data: lesson } = await supabase
-    .from('lessons')
-    .select('id, slug, title, content_markdown, video_url, video_provider, pdf_url, content_type, order_index')
-    .eq('course_id', course.id)
-    .eq('slug', lessonSlug)
-    .single()
+  // Fetch lesson and all lessons in parallel
+  const [lessonResult, allLessonsResult] = await Promise.all([
+    supabase
+      .from('lessons')
+      .select('id, slug, title, content_markdown, video_url, video_provider, pdf_url, content_type, order_index')
+      .eq('course_id', course.id)
+      .eq('slug', lessonSlug)
+      .single(),
+    supabase
+      .from('lessons')
+      .select('id, slug, title, order_index')
+      .eq('course_id', course.id)
+      .order('order_index', { ascending: true })
+      .limit(100)
+  ])
+
+  const lesson = lessonResult.data
+  const allLessons = allLessonsResult.data
 
   if (!lesson) notFound()
-
-  const { data: allLessons } = await supabase
-    .from('lessons')
-    .select('id, slug, title, order_index')
-    .eq('course_id', course.id)
-    .order('order_index', { ascending: true })
 
   const currentIdx = allLessons?.findIndex((l: { slug: string }) => l.slug === lessonSlug) ?? -1
   const prevLesson = currentIdx > 0 && allLessons ? allLessons[currentIdx - 1] : null
